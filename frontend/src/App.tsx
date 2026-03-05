@@ -18,14 +18,24 @@ function App() {
 
     setLoading(true);
     const formData = new FormData();
-    formData.append("cv", file);
-    formData.append("job_url", url);
+    formData.append("file", file);
+    formData.append("url", url);
 
     try {
-      // כאן יקרה החיבור הממשי לשרת ה-Django שלך בעתיד
-      // const response = await axios.post('http://localhost:8000/api/analyze', formData);
+      const response = await axios.post(
+        "http://127.0.0.1:8000/analyze/",
+
+        formData,
+
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
 
       toast.success("Analysis may take several seconds...");
+      console.log(response.data);
     } catch (error) {
       toast.error("something went wrong");
     } finally {
@@ -45,7 +55,11 @@ function App() {
       </header>
 
       <main className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+          encType="multipart/form-data"
+        >
           {/* שדה העלאת קובץ */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
@@ -75,6 +89,7 @@ function App() {
                       setFile(e.target.files[0]);
                     }
                   }}
+                  name="file"
                 />
               </label>
             </div>
@@ -95,6 +110,7 @@ function App() {
                 placeholder="https://www.linkedin.com/jobs/..."
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
+                name="url"
               />
             </div>
           </div>
