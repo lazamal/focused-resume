@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, type EventHandler } from "react";
 import axios from "axios";
 import { Upload, Link as LinkIcon, FileText, Send } from "lucide-react";
 import { Toaster, toast } from "sonner";
+import { SkillCard } from "../components/SkillCard";
 
 function App() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file || !url) {
-      toast.error("נא להעלות קובץ ולהזין לינק למשרה");
+      toast.error("Upload a file and a link to a job description");
       return;
     }
 
@@ -24,10 +25,9 @@ function App() {
       // כאן יקרה החיבור הממשי לשרת ה-Django שלך בעתיד
       // const response = await axios.post('http://localhost:8000/api/analyze', formData);
 
-      toast.success("הניתוח החל! זה עשוי לקחת כמה שניות...");
-      console.log("Sending to Backend:", { file: file.name, url });
+      toast.success("Analysis may take several seconds...");
     } catch (error) {
-      toast.error("משהו השתבש בתקשורת עם השרת");
+      toast.error("something went wrong");
     } finally {
       setLoading(false);
     }
@@ -35,13 +35,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4">
-      <Toaster dir="rtl" position="top-center" />
+      <Toaster position="top-center" />
 
       <header className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-          CV Matcher
+          Focused resume reviewer
         </h1>
-        <p className="text-gray-600">עקפו את ה-AI של המגייסים באמצעות NLP</p>
+        <p className="text-gray-600 text-3xl">Get Noticed</p>
       </header>
 
       <main className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8">
@@ -49,7 +49,7 @@ function App() {
           {/* שדה העלאת קובץ */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              קורות חיים (PDF)
+              Resume (PDF)
             </label>
             <div className="flex items-center justify-center w-full">
               <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
@@ -70,7 +70,11 @@ function App() {
                   type="file"
                   className="hidden"
                   accept=".pdf"
-                  onChange={(e) => setFile(e.target.files[0])}
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
                 />
               </label>
             </div>
@@ -79,7 +83,7 @@ function App() {
           {/* שדה לינק למשרה */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              לינק לתיאור המשרה
+              Job description link
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -115,6 +119,45 @@ function App() {
           </button>
         </form>
       </main>
+      <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
+        <p className="text-center text-1xl font-medium text-gray-700">
+          skill matched
+        </p>
+        <div className="mt-4 flex flex-row gap-3 flex-wrap">
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+        </div>
+      </div>
+
+      <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
+        <p className="text-center text-1xl  font-medium text-gray-700">
+          skill gaps
+        </p>
+        <div className="mt-4 flex flex-row gap-3 flex-wrap">
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+          <SkillCard skillName="skill" />
+        </div>
+      </div>
     </div>
   );
 }

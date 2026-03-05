@@ -1,75 +1,57 @@
-# React + TypeScript + Vite
+# Focused-Resume: AI-Powered CV Matcher 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Focused-Resume** is an automated resume screening and tagging application designed to streamline the hiring process. By leveraging Natural Language Processing (NLP), the system analyzes candidate CVs against job descriptions to extract key skills and calculate a compatibility score.
 
-Currently, two official plugins are available:
+## 🛠 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React, Tailwind CSS, Vite
+- **Backend:** Django, Django REST Framework (DRF)
+- **Environment Management:** Poetry
+- **NLP & Processing:** spaCy, PyMuPDF (fitz)
 
-## React Compiler
+## 🌟 Key Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Automated Skill Extraction:** Uses Named Entity Recognition (NER) to identify technical skills from PDF resumes.
+- **Job Description Matching:** Compares extracted resume data with job requirements provided via URL or text.
+- **Interactive Dashboard:** A React-based UI to view extracted skills as tags and see matching results.
+- **PDF Parsing:** High-performance text extraction from PDF files using PyMuPDF.
 
-Note: This will impact Vite dev & build performances.
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Python 3.13 or 3.14
+- Node.js & npm
+- Poetry (Python package manager)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd focused-resume
+   Setup Backend:
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Bash
+poetry install
+poetry run python -m spacy download en_core_web_sm
+Setup Frontend:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Bash
+cd frontend
+npm install
+🏗 Project Structure
+Plaintext
+├── backend/ # Django project & DRF API
+├── frontend/ # React + Vite application
+├── pyproject.toml # Poetry dependencies & configuration
+└── README.md # Project documentation
+📝 Roadmap
+[x] Initial Project Setup (Poetry, React, Django).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+[ ] Integration of spaCy for NER Skill Extraction.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+[ ] Implementation of PDF upload and parsing.
+
+[ ] Scoring algorithm for Job-CV matching.
