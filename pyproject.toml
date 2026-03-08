@@ -15,7 +15,10 @@ dependencies = [
     "urllib3 (>=2.6.3,<3.0.0)",
     "playwright (>=1.58.0,<2.0.0)",
     "jupyter (>=1.1.1,<2.0.0)",
-    "nltk (>=3.9.3,<4.0.0)"
+    "nltk (>=3.9.3,<4.0.0)",
+    "pandas (>=3.0.1,<4.0.0)",
+    "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
+    "scikit-learn (>=1.8.0,<2.0.0)"
 ]
 
 
