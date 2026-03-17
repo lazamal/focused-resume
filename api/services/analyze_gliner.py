@@ -6,10 +6,9 @@ class Analyze_Gliner:
         self.model = GLiNER.from_pretrained("urchade/gliner_medium-v2.1")
 
         self.labels = [
-            'tasks'
-                    "technical",
-                    "responsibility",
-               
+            'tasks',
+            "responsibility",
+
                 ]
 
     def analyze(self, text):
