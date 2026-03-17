@@ -7,7 +7,12 @@ import trafilatura
 import fitz  # PyMuPDF
 import os
 from pathlib import Path
+from api.services.analyze_text import Analyze_Text
+from api.services.analyze_gliner import Analyze_Gliner
 
+
+analyzer = Analyze_Text()
+gliner_analyzer = Analyze_Gliner()
 
 def scrape_frontend(url):
     with sync_playwright() as p:
@@ -68,6 +73,7 @@ class AnalyzeCV(View):
 
     def post(self, request):
         # קבלת הקובץ והלינק מה-Frontend
+ 
         cv_file = request.FILES.get('file')
         job_url = request.POST.get('url')
         
@@ -84,12 +90,23 @@ class AnalyzeCV(View):
         with open("api/experiments/pdf_text.txt", 'w',encoding="utf-8" ) as f:
             f.write(pdf_text if pdf_text else "No pdf text was extacted")
 
-        
+
+        # similarity = analyzer.analyze_2_texts(job_text_scraped, pdf_text)
+        # skills_in_resume = analyzer.analyze_entity_ruler(pdf_text)
+        # skills_in_job = analyzer.analyze_entity_ruler(job_text_scraped)
+
+        # chunks_job = analyzer.extract_noun_chunks(job_text_scraped)
+        # chunk_cv = analyzer.extract_noun_chunks(pdf_text)
+        # entities_job = analyzer.extract_entities(job_text_scraped)
+        # entities_cv = analyzer.extract_entities(pdf_text)
+
+        text = gliner_analyzer.analyze(job_text_scraped)
+
         return JsonResponse({
             "message": f'File received! {job_text_scraped}',
-            "skills": ["Python", "Django", "NLP"],
-            "filename": cv_file.name,
-            "url_received": job_url
+            "text": text,
+  
+
         })
 
 # to do: if the linkding url is from copy paste like this
