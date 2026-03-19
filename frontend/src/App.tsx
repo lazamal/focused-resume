@@ -1,4 +1,4 @@
-import React, { useState, type EventHandler } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Upload, Link as LinkIcon, FileText, Send } from "lucide-react";
 import { Toaster, toast } from "sonner";
@@ -8,6 +8,7 @@ function App() {
   const [file, setFile] = useState<File | null>(null);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<any>();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,9 +25,7 @@ function App() {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/analyze/",
-
         formData,
-
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -36,6 +35,7 @@ function App() {
 
       toast.success("Analysis may take several seconds...");
       console.log(response.data);
+      setResults(response.data);
     } catch (error) {
       toast.error("something went wrong");
     } finally {
@@ -43,15 +43,23 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    const jobSkills = results?.job_skills;
+    const cvSkills = results?.cv_skills;
+    console.log(cvSkills, jobSkills);
+  }, [results]);
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4">
       <Toaster position="top-center" />
 
       <header className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-          Focused resume reviewer
+          Skill Extractor
         </h1>
-        <p className="text-gray-600 text-3xl">Get Noticed</p>
+        <p className="text-gray-600 text-3xl">
+          Know what you need to know. Fast.
+        </p>
       </header>
 
       <main className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8">
@@ -126,54 +134,39 @@ function App() {
             }`}
           >
             {loading ? (
-              "מנתח נתונים..."
+              "Extracting..."
             ) : (
               <>
-                נתח התאמה <Send className="w-4 h-4 ml-2" />
+                Extract <Send className="w-4 h-4 ml-2" />
               </>
             )}
           </button>
         </form>
       </main>
-      <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
-        <p className="text-center text-1xl font-medium text-gray-700">
-          skill matched
-        </p>
-        <div className="mt-4 flex flex-row gap-3 flex-wrap">
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
+      {results?.job_skills && (
+        <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
+          <p className="text-center text-1xl font-medium text-gray-700">
+            Skills in the job description
+          </p>
+          <div className="mt-4 flex flex-row gap-3 flex-wrap">
+            {results.job_skills.map((skill: string) => {
+              return <SkillCard key={skill} skillName={skill} />;
+            })}
+          </div>
         </div>
-      </div>
-
-      <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
-        <p className="text-center text-1xl  font-medium text-gray-700">
-          skill gaps
-        </p>
-        <div className="mt-4 flex flex-row gap-3 flex-wrap">
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
-          <SkillCard skillName="skill" />
+      )}
+      {results?.cv_skills && (
+        <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
+          <p className="text-center text-1xl  font-medium text-gray-700">
+            Skills in your resume
+          </p>
+          <div className="mt-4 flex flex-row gap-3 flex-wrap">
+            {results.cv_skills.map((skill: string) => {
+              return <SkillCard key={skill} skillName={skill} />;
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

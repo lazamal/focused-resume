@@ -156,11 +156,13 @@ class Analyze_Text:
             
         return ents_list
     
+    # use this
     def extract_skills_new_model(self, text):
 
         doc = self.skill_extractor_model(text)
-        skills = [ent.text for ent in doc.ents if "SKILLS" in ent.label_]
-        return skills
+        skills = [ent.text.lower() for ent in doc.ents if "SKILLS" in ent.label_]
+        
+        return list(set(skills))
     
     def extract_skills_new_model2(self, text):
 

@@ -12,7 +12,7 @@ from api.services.analyze_gliner import Analyze_Gliner
 
 
 analyzer = Analyze_Text()
-gliner_analyzer = Analyze_Gliner()
+# gliner_analyzer = Analyze_Gliner()
 
 def scrape_frontend(url):
     with sync_playwright() as p:
@@ -91,21 +91,14 @@ class AnalyzeCV(View):
             f.write(pdf_text if pdf_text else "No pdf text was extacted")
 
 
-        # similarity = analyzer.analyze_2_texts(job_text_scraped, pdf_text)
-        # skills_in_resume = analyzer.analyze_entity_ruler(pdf_text)
-        # skills_in_job = analyzer.analyze_entity_ruler(job_text_scraped)
 
-        # chunks_job = analyzer.extract_noun_chunks(job_text_scraped)
-        # chunk_cv = analyzer.extract_noun_chunks(pdf_text)
-        # entities_job = analyzer.extract_entities(job_text_scraped)
-        # entities_cv = analyzer.extract_entities(pdf_text)
-
-        text = gliner_analyzer.analyze(job_text_scraped)
+        job_skills = analyzer.extract_skills_new_model(job_text_scraped)
+        cv_skills =  analyzer.extract_skills_new_model(pdf_text)
 
         return JsonResponse({
             "message": f'File received! {job_text_scraped}',
-            "text": text,
-  
+            'job_skills': job_skills,
+            'cv_skills': cv_skills,
 
         })
 
