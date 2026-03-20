@@ -9,6 +9,8 @@ import os
 from pathlib import Path
 from api.services.analyze_text import Analyze_Text
 from api.services.analyze_gliner import Analyze_Gliner
+from api.services.compare_cv_to_job import compare_cv_to_job
+from api.services.skill_blacklist import skill_blacklist
 
 
 analyzer = Analyze_Text()
@@ -70,6 +72,9 @@ def extract_pdf(cv_file):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AnalyzeCV(View):
+    def __init__(self):
+        self.job_blacklist = ['tango']
+    
 
     def post(self, request):
         # קבלת הקובץ והלינק מה-Frontend
@@ -95,10 +100,15 @@ class AnalyzeCV(View):
         job_skills = analyzer.extract_skills_new_model(job_text_scraped)
         cv_skills =  analyzer.extract_skills_new_model(pdf_text)
 
+        job_clean_blacklist = skill_blacklist(job_skills, self.job_blacklist)
+
+        matched_skills, skills_to_learn = compare_cv_to_job(job_clean_blacklist, cv_skills)
+
+
         return JsonResponse({
             "message": f'File received! {job_text_scraped}',
-            'job_skills': job_skills,
-            'cv_skills': cv_skills,
+            'matched_skills': matched_skills,
+            'skills_to_learn': skills_to_learn,
 
         })
 

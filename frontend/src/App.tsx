@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Upload, Link as LinkIcon, FileText, Send } from "lucide-react";
 import { Toaster, toast } from "sonner";
-import { SkillCard } from "../components/SkillCard";
+import { MissingSkillCard } from "./components/MissingSkillCard";
+import { OverallMatchCard } from "./components/OverallMatchCard";
+import { SkillDisplayCard } from "./components/SkillsDisplayCard";
+import { MatchSkillCard } from "./components/MatchSkillCard";
+import { SkillFooterCard } from "./components/SkillFooterCard";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -42,12 +46,6 @@ function App() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const jobSkills = results?.job_skills;
-    const cvSkills = results?.cv_skills;
-    console.log(cvSkills, jobSkills);
-  }, [results]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4">
@@ -143,30 +141,31 @@ function App() {
           </button>
         </form>
       </main>
-      {results?.job_skills && (
-        <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
-          <p className="text-center text-1xl font-medium text-gray-700">
-            Skills in the job description
-          </p>
-          <div className="mt-4 flex flex-row gap-3 flex-wrap">
-            {results.job_skills.map((skill: string) => {
-              return <SkillCard key={skill} skillName={skill} />;
-            })}
+      <div className="w-full max-w-5xl flex flex-col items-stretch">
+        <OverallMatchCard />
+        <div className="flex flex-row items-stretch">
+          <div className="flex-1 basis-0 flex flex-col">
+            {results?.matched_skills && (
+              <SkillDisplayCard
+                headline="Matched skills"
+                skillsToShow={results.matched_skills}
+                SkillCardToUse={MatchSkillCard}
+              />
+            )}
+          </div>
+
+          <div className="flex-1 basis-0 flex flex-col ">
+            {results?.skills_to_learn && (
+              <SkillDisplayCard
+                headline="Skills to learn"
+                skillsToShow={results.skills_to_learn}
+                SkillCardToUse={MissingSkillCard}
+              />
+            )}
           </div>
         </div>
-      )}
-      {results?.cv_skills && (
-        <div className="w-full  mt-10 max-w-2xl bg-white rounded-2xl shadow-xl p-8">
-          <p className="text-center text-1xl  font-medium text-gray-700">
-            Skills in your resume
-          </p>
-          <div className="mt-4 flex flex-row gap-3 flex-wrap">
-            {results.cv_skills.map((skill: string) => {
-              return <SkillCard key={skill} skillName={skill} />;
-            })}
-          </div>
-        </div>
-      )}
+        <SkillFooterCard />
+      </div>
     </div>
   );
 }
