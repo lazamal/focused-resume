@@ -103,12 +103,20 @@ class AnalyzeCV(View):
         job_clean_blacklist = skill_blacklist(job_skills, self.job_blacklist)
 
         matched_skills, skills_to_learn = compare_cv_to_job(job_clean_blacklist, cv_skills)
-
+        
+        count_matched_skills = len(matched_skills)
+        count_skills_to_learn = len(skills_to_learn)
+        overall_score = count_matched_skills / len(job_clean_blacklist)
+        overall_score = str(int(overall_score*100)) + '%'
 
         return JsonResponse({
             "message": f'File received! {job_text_scraped}',
             'matched_skills': matched_skills,
             'skills_to_learn': skills_to_learn,
+            'number_of_matched_skills': count_matched_skills,
+            'number_of_skills_to_learn': count_skills_to_learn,
+            'overall_score': overall_score,
+            'total_skills_for_job': len(job_clean_blacklist)
 
         })
 

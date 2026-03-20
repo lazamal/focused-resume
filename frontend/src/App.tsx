@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Upload, Link as LinkIcon, FileText, Send } from "lucide-react";
 import { Toaster, toast } from "sonner";
@@ -53,10 +53,10 @@ function App() {
 
       <header className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-          Skill Extractor
+          Skill Gap
         </h1>
         <p className="text-gray-600 text-3xl">
-          Know what you need to know. Fast.
+          See what the recruiter sees before they do
         </p>
       </header>
 
@@ -132,17 +132,21 @@ function App() {
             }`}
           >
             {loading ? (
-              "Extracting..."
+              "Analyzing..."
             ) : (
               <>
-                Extract <Send className="w-4 h-4 ml-2" />
+                Analyze <Send className="w-4 h-4 ml-2" />
               </>
             )}
           </button>
         </form>
       </main>
       <div className="w-full max-w-5xl flex flex-col items-stretch">
-        <OverallMatchCard />
+        <OverallMatchCard
+          score={results?.overall_score}
+          numberOfMatchedSkills={results?.number_of_matched_skills}
+          totalSkillsForJob={results?.total_skills_for_job}
+        />
         <div className="flex flex-row items-stretch">
           <div className="flex-1 basis-0 flex flex-col">
             {results?.matched_skills && (
@@ -164,7 +168,11 @@ function App() {
             )}
           </div>
         </div>
-        <SkillFooterCard />
+        <SkillFooterCard
+          score={results?.overall_score}
+          numberOfMatchedSkills={results?.number_of_matched_skills}
+          numberOfSkillsToLearn={results?.number_of_skills_to_learn}
+        />
       </div>
     </div>
   );
