@@ -33,7 +33,7 @@ function App() {
       return;
     }
     if (file.size > maxFileSize) {
-      toast.error("File is too big. upload a file below 5MB");
+      toast.error("File is too big. Please upload a file below 5MB");
       return;
     }
     toast.success("Analysis may take several seconds...");
