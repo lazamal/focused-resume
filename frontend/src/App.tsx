@@ -15,6 +15,8 @@ import { SkillDisplayCard } from "./components/SkillsDisplayCard";
 import { MatchSkillCard } from "./components/MatchSkillCard";
 import { SkillFooterCard } from "./components/SkillFooterCard";
 
+import { SkeletonDemo } from "./components/SkeletonDemo";
+
 function App() {
   const [file, setFile] = useState<File | null>(null);
   const [url, setUrl] = useState<string | null>("");
@@ -30,6 +32,7 @@ function App() {
       return;
     }
     toast.success("Analysis may take several seconds...");
+    setResults(undefined);
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
@@ -221,39 +224,43 @@ function App() {
           </button>
         </form>
       </main>
-      <div className="w-full max-w-3xl flex flex-col items-stretch">
-        <OverallMatchCard
-          score={results?.overall_score}
-          numberOfMatchedSkills={results?.number_of_matched_skills}
-          totalSkillsForJob={results?.total_skills_for_job}
-        />
-        <div className="flex flex-row items-stretch">
-          <div className="flex-1 basis-0 flex flex-col">
-            {results?.matched_skills && (
+
+      {/* if no results and is loading show skeleton */}
+      {/* if results and is not loading show interface */}
+      {/*  if no results and is not loading show nothing */}
+      {loading && !results ? (
+        <SkeletonDemo />
+      ) : results && !loading ? (
+        <div className="w-full max-w-3xl flex flex-col items-stretch">
+          <OverallMatchCard
+            score={results?.overall_score}
+            numberOfMatchedSkills={results?.number_of_matched_skills}
+            totalSkillsForJob={results?.total_skills_for_job}
+          />
+          <div className="flex flex-row items-stretch">
+            <div className="flex-1 basis-0 flex flex-col">
               <SkillDisplayCard
                 headline="Matched skills"
                 skillsToShow={results.matched_skills}
                 SkillCardToUse={MatchSkillCard}
               />
-            )}
-          </div>
+            </div>
 
-          <div className="flex-1 basis-0 flex flex-col ">
-            {results?.skills_to_learn && (
+            <div className="flex-1 basis-0 flex flex-col ">
               <SkillDisplayCard
                 headline="Skills to learn"
                 skillsToShow={results.skills_to_learn}
                 SkillCardToUse={MissingSkillCard}
               />
-            )}
+            </div>
           </div>
+          <SkillFooterCard
+            score={results?.overall_score}
+            numberOfMatchedSkills={results?.number_of_matched_skills}
+            numberOfSkillsToLearn={results?.number_of_skills_to_learn}
+          />
         </div>
-        <SkillFooterCard
-          score={results?.overall_score}
-          numberOfMatchedSkills={results?.number_of_matched_skills}
-          numberOfSkillsToLearn={results?.number_of_skills_to_learn}
-        />
-      </div>
+      ) : null}
     </div>
   );
 }

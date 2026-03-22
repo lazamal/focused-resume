@@ -1,67 +1,30 @@
-Full Stack Engineer
-Full Stack Engineer
-WalkMe
-Tel Aviv-Yafo, Tel Aviv District, Israel
-See who WalkMe has hired for this role
-See who WalkMe has hired for this role
-You will join us in the journey of building an amazing product in the online user experience realm, and as a team member your contribution will go beyond coding, as you will have a direct impact on the way we steer this ship on its crazy journey.
-We are looking for people who look at the world differently, people who are passionate about code, clean design, high performance and leading technology to the extreme. If you are passionate about developing an innovative product, making an impact, and strive to work with the industry’s brightest talent as part of one of the fastest growing and successful startups around – WalkMe is where you want to be!
-What will you actually be doing?
-- End-to-end development using cutting edge technologies
-- Be part of an organic team developing in a fast-paced environment
-- Work very closely with the business, dealing with 30% of Fortune 500 companies
-- Develop code that is used daily by millions of users
-- Practice advanced client-side techniques
-- Contribute to challenging server-side development with microservices architecture, using the industry's latest trends
-- A B.Sc . from a leading university - a must
-- At least 4 years of experience with Web technologies, both front and back-end
-- High level of confidence in React.js
-- Knowledgeable in NodeJS
-- Experience working on large throughput high-performance systems
-- Experience in writing unit tests \ integration tests \ system tests and CI\CD methodology
-- Experience with Chrome Extensions – Advantage
--
-Seniority level
-Mid-Senior level -
-Employment type
-Full-time -
-Job function
-Engineering and Information Technology -
-Industries
-Software Development
-Referrals increase your chances of interviewing at WalkMe by 2x
-See who you knowSimilar jobs
-People also viewed
--
-Full Stack Engineer
-Full Stack Engineer
--
-Full Stack Engineer
-Full Stack Engineer
--
-Front-End Developer
-Front-End Developer
--
-Full Stack Engineer
-Full Stack Engineer
--
-Software Engineer -New college Grad
-Software Engineer -New college Grad
--
-Full Stack Engineer
-Full Stack Engineer
--
-Full Stack Developer
-Full Stack Developer
--
-Full Stack Developer
-Full Stack Developer
--
-Full Stack Engineer
-Full Stack Engineer
--
-Full-Stack Developer
-Full-Stack Developer
-Explore top content on LinkedIn
-Find curated posts and insights for relevant topics all in one place.
-View top content
+Product Manager (Games domain)
+- Product
+- Tel Aviv
+- Mid
+- Full-time
+Description
+Tango is a successful, market leader, a live-streaming Platform with 550+ million registered users, in an industry projected to reach $240 BILLION in the next couple of years.
+The B2C platform, based on the best-quality global video technology, allows millions of talented people around the world to create their own live content, engage with their fans, and monetize their talents.
+Tango live stream was founded in 2018 and is powered by 500+ global employees operating in a culture of growth, learning, and success!
+The Tango team is a vigorous cocktail of hard workers, creative brains, energizers, geeks, overachievers, athletes, and more. We push the limits to bring our app from “one of the top” to “the leader”.
+The best way to describe Tango's work style is not to use the word “impossible”. And we believe that success is a thorny path that runs on sleepless nights, corporate parties, tough releases, and, of course, our users' smiles (and as we are a LIVE app, we truly get to see our users all around the world smiling right in front of us in real-time!).
+Do you want to join the party?
+We’re now looking for a Product Manager (Games domain) to join our Product team in Tel Aviv and take ownership of impactful, user-facing features in a fast-paced, data-driven environment.
+Responsibilities
+- Define and execute product roadmaps aligned with business goals, user needs, and company vision
+- Proactively identify new opportunities within the live-streaming ecosystem and drive product innovation
+- Own the end-to-end lifecycle of features - from ideation and prioritization to launch and post-release optimization
+- Make data-driven decisions using product analytics, user insights, and market trends
+- Define success metrics, monitor performance, and continuously iterate to improve results
+- Act as the main point of alignment between business, engineering, and stakeholders
+- Operate with a strong ship-to-production mindset, balancing speed, impact, and quality
+Requirements
+- Experience in gaming, social, or monetization-driven products (in-app purchases, virtual economies) - Must
+- 3+ years of experience as a B2C Product Manager, ideally in fast-paced tech or consumer-facing products
+- Proven track record of launching and scaling products with measurable business impact
+- Strong analytical and strategic thinking, with the ability to turn data into clear decisions
+- Excellent communication and stakeholder-management skills
+- Full professional proficiency in English (written and spoken)
+- Hands-on experience with product analytics tools (Amplitude, Mixpanel, Looker or similar)
+#LI-AP2

@@ -1,7 +1,8 @@
 ## todo
 
-1. finish textarea on serverside
-2. fix linkedin broken link
+<!-- 1. finish textarea on serverside V
+2. fix linkedin broken link V -->
+
 3. hide results UI
 4. save submmition data to the DB
 5. add buy me a coffee
