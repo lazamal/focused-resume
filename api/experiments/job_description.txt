@@ -1,55 +1,30 @@
-Frontend Engineer
-Frontend Engineer
-Regatta Data
-Binyamina, Haifa District, Israel
-See who Regatta Data has hired for this role
-See who Regatta Data has hired for this role
-We are a team of veteran entrepreneurs and software engineers. We have been working together in the field of data management for 20+ years. During that period, we have gained a track record of building successful enterprises that have created outstanding value for team members, investors, and customers. Regatta develops, from scratch, a high-end mission-critical, extreme performance, distributed transactional and analytical database that brings simplicity alongside powerful features.
-The Role
-The Regatta Connect team builds and maintains the ecosystem around RegattaDB. We are looking for a frontend engineer to design, develop and evolve the UI of RegattaDB's external management system, that facilitates both the Regatta Cloud (DBaaS) platform and on-prem deployments, and enables seamless access to RegattaDB. As a Frontend Engineer at Regatta, you'll be responsible for creating intuitive interfaces for complex data products and delivering high-quality, scalable UI components and user experiences in close collaboration with product and backend teams.
-Everybody at Regatta, regardless of experience, has full ownership of the product's architecture and design, software development, and quality assurance. In addition to hands-on software engineering, we encourage leadership, communication, teamwork, and cooperation.
+Product Manager (Games domain)
+- Product
+- Tel Aviv
+- Mid
+- Full-time
+Description
+Tango is a successful, market leader, a live-streaming Platform with 550+ million registered users, in an industry projected to reach $240 BILLION in the next couple of years.
+The B2C platform, based on the best-quality global video technology, allows millions of talented people around the world to create their own live content, engage with their fans, and monetize their talents.
+Tango live stream was founded in 2018 and is powered by 500+ global employees operating in a culture of growth, learning, and success!
+The Tango team is a vigorous cocktail of hard workers, creative brains, energizers, geeks, overachievers, athletes, and more. We push the limits to bring our app from “one of the top” to “the leader”.
+The best way to describe Tango's work style is not to use the word “impossible”. And we believe that success is a thorny path that runs on sleepless nights, corporate parties, tough releases, and, of course, our users' smiles (and as we are a LIVE app, we truly get to see our users all around the world smiling right in front of us in real-time!).
+Do you want to join the party?
+We’re now looking for a Product Manager (Games domain) to join our Product team in Tel Aviv and take ownership of impactful, user-facing features in a fast-paced, data-driven environment.
+Responsibilities
+- Define and execute product roadmaps aligned with business goals, user needs, and company vision
+- Proactively identify new opportunities within the live-streaming ecosystem and drive product innovation
+- Own the end-to-end lifecycle of features - from ideation and prioritization to launch and post-release optimization
+- Make data-driven decisions using product analytics, user insights, and market trends
+- Define success metrics, monitor performance, and continuously iterate to improve results
+- Act as the main point of alignment between business, engineering, and stakeholders
+- Operate with a strong ship-to-production mindset, balancing speed, impact, and quality
 Requirements
-Must Have
-- Deep proficiency in React, TypeScript, and JavaScript (ES6+)
-- Mastery of HTML5 and CSS3 (including modern layouts like Flexbox/Grid and CSS-in-JS or Tailwind)
-- Experience with Figma (working with graphic designers)
-- High UI/UX intuition (eye for typography, spacing, coloring and notion)
-- Ability to navigate the backend and manage data layers to ensure seamless integration between the UI and server-side logic
-- Fast learner with a passion for new technologies
-- Strong analytical skills with a systematic and execution-focused mindset
-- High level of independence, personal drive and ambition
-- Fluent in English
-- BSc in a relevant field
-- Experience developing customer facing management platforms
-- Familiarity with GitOps and containerization (e.g., Docker)
-Regatta's offices are conveniently located right near the Binyamina train station.
--
-Seniority level
-Entry level -
-Employment type
-Full-time -
-Job function
-Engineering -
-Industries
-IT Services and IT Consulting
-Referrals increase your chances of interviewing at Regatta Data by 2x
-See who you knowSimilar jobs
-People also viewed
--
-Lead Software Engineer (Backend & Infrastructure Focus)
-Lead Software Engineer (Backend & Infrastructure Focus)
--
-Senior PHP Developer
-Senior PHP Developer
--
-PHP Developer
-PHP Developer
--
-PHP Developer
-PHP Developer
--
-PHP Back End Developer
-PHP Back End Developer
-Explore top content on LinkedIn
-Find curated posts and insights for relevant topics all in one place.
-View top content
+- Experience in gaming, social, or monetization-driven products (in-app purchases, virtual economies) - Must
+- 3+ years of experience as a B2C Product Manager, ideally in fast-paced tech or consumer-facing products
+- Proven track record of launching and scaling products with measurable business impact
+- Strong analytical and strategic thinking, with the ability to turn data into clear decisions
+- Excellent communication and stakeholder-management skills
+- Full professional proficiency in English (written and spoken)
+- Hands-on experience with product analytics tools (Amplitude, Mixpanel, Looker or similar)
+#LI-AP2

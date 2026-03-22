@@ -61,8 +61,17 @@ function App() {
 
       console.log(response.data);
       setResults(response.data);
-    } catch (error) {
-      toast.error("something went wrong");
+    } catch (error: any) {
+      const serverError = error.response?.data?.error;
+      if (serverError) {
+        toast.error(serverError);
+      } else if (error.response?.status === 408) {
+        toast.error("The request timed out. Please try again.");
+      } else if (error.response?.status === 429) {
+        toast.error("You're moving too fast! Please wait a minute.");
+      } else {
+        toast.error("Something went wrong with the server.");
+      }
     } finally {
       setLoading(false);
     }

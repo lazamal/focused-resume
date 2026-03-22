@@ -13,24 +13,34 @@ from api.services.analyze_gliner import Analyze_Gliner
 from api.services.compare_cv_to_job import compare_cv_to_job
 from api.services.skill_blacklist import skill_blacklist
 from api.services.clean_linkedin_url import clean_linkedin_url
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 
 analyzer = Analyze_Text()
 # gliner_analyzer = Analyze_Gliner()
 
-def scrape_frontend(url):
-    with sync_playwright() as p:
-       
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-    
-        page.goto(url, wait_until="networkidle")
-        
 
-        rendered_content = page.content()
-        browser.close()
-        text_scraped = trafilatura.extract(rendered_content)
-        return text_scraped
+
+def scrape_frontend(url):
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page()
+            
+        
+            page.set_default_timeout(20000) 
+            
+            try:
+                page.goto(url, wait_until="networkidle")
+                rendered_content = page.content()
+                browser.close()
+                return trafilatura.extract(rendered_content)
+            except PlaywrightTimeoutError:
+                browser.close()
+                return "TIMEOUT_ERROR" 
+    except Exception as e:
+        print(f"Scraping error: {e}")
+        return None
     
 
 
@@ -91,8 +101,11 @@ class AnalyzeCV(View):
         if job_url:
             job_url = clean_linkedin_url(job_url)
             job_text_scraped = scrape_frontend(job_url)
-            with open("api/experiments/job_description.txt", 'w',encoding="utf-8" ) as f:
-                f.write(job_text_scraped if job_text_scraped else "No text was scraped")
+            if job_text_scraped == "TIMEOUT_ERROR":
+                return JsonResponse({
+            "error": "LinkedIn is taking too long to respond. Please try pasting the job text manually instead."
+        }, status=408)
+
             job_skills = analyzer.extract_skills_new_model(job_text_scraped)
         elif text_description:
             job_skills = analyzer.extract_skills_new_model(text_description)
@@ -100,11 +113,13 @@ class AnalyzeCV(View):
             return JsonResponse({"error": "No job description uploaded"}, status=400)
         
         job_clean_blacklist = skill_blacklist(job_skills, self.job_blacklist)
+        if not job_clean_blacklist:
+            return JsonResponse({
+                "error": "No skills detected. Please provide a more detailed job description."
+            }, status=400)
 
         pdf_text = extract_pdf(cv_file)
  
-        with open("api/experiments/pdf_text.txt", 'w',encoding="utf-8" ) as f:
-            f.write(pdf_text if pdf_text else "No pdf text was extacted")
         cv_skills =  analyzer.extract_skills_new_model(pdf_text)
 
 
@@ -112,8 +127,12 @@ class AnalyzeCV(View):
         
         count_matched_skills = len(matched_skills)
         count_skills_to_learn = len(skills_to_learn)
+    
         overall_score = count_matched_skills / len(job_clean_blacklist)
         overall_score = str(int(overall_score*100)) + '%'
+    
+          
+        
         content = job_text_scraped or text_description or "No description provided"
 
         submission = Resume_Submission.objects.create(
