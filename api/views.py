@@ -7,6 +7,7 @@ import trafilatura
 import fitz  # PyMuPDF
 import os
 from pathlib import Path
+from api.models import Resume_Submission
 from api.services.analyze_text import Analyze_Text
 from api.services.analyze_gliner import Analyze_Gliner
 from api.services.compare_cv_to_job import compare_cv_to_job
@@ -78,7 +79,7 @@ class AnalyzeCV(View):
     
 
     def post(self, request):
-        # קבלת הקובץ והלינק מה-Frontend
+
         job_text_scraped = None
         cv_file = request.FILES.get('file')
         job_url = request.POST.get('url')
@@ -114,6 +115,17 @@ class AnalyzeCV(View):
         overall_score = count_matched_skills / len(job_clean_blacklist)
         overall_score = str(int(overall_score*100)) + '%'
         content = job_text_scraped or text_description or "No description provided"
+
+        submission = Resume_Submission.objects.create(
+        file=cv_file,
+        resume_content=pdf_text,
+        job_url=job_url,
+        job_content=content,
+        job_skills=job_clean_blacklist,
+        cv_skills=cv_skills,
+        matched_skills=matched_skills,
+        skills_to_learn=skills_to_learn
+    )
 
         return JsonResponse({
             "message": f'File received! {content}',

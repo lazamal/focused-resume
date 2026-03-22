@@ -26,9 +26,14 @@ function App() {
   const [inputMode, setInputMode] = useState<"link" | "text">("link");
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const maxFileSize = 5 * 1024 * 1024;
     e.preventDefault();
     if (!file || (!url && !textareaInput)) {
       toast.error("Upload a file and a link to a job description");
+      return;
+    }
+    if (file.size > maxFileSize) {
+      toast.error("File is too big. upload a file below 5MB");
       return;
     }
     toast.success("Analysis may take several seconds...");
@@ -69,10 +74,11 @@ function App() {
 
       <header className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-          Skill Gap
+          Stop Guessing.{" "}
+          <span className="text-orange-400">Start Matching.</span>
         </h1>
-        <p className="text-gray-600 text-3xl">
-          See what the recruiter sees before they do
+        <p className="text-gray-500 text-lg">
+          Know which skills you're missing before you apply
         </p>
       </header>
 
@@ -85,7 +91,7 @@ function App() {
           {/* שדה העלאת קובץ */}
           <div className="space-y-2 bg">
             <div className="flex flex-row-reverse justify-end gap-2">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-semibold text-gray-700">
                 Resume (PDF)
               </label>
               <FileText className="w-4 h-4 text-orange-500" />
@@ -208,7 +214,7 @@ function App() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white font-bold transition-all ${
+            className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white  transition-all ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
@@ -218,7 +224,8 @@ function App() {
               "Analyzing..."
             ) : (
               <>
-                Analyze <Send className="w-4 h-4 ml-2" />
+                Analyze My Resume
+                <Send className="w-4 h-4 ml-2" />
               </>
             )}
           </button>

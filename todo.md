@@ -1,10 +1,11 @@
 ## todo
 
 <!-- 1. finish textarea on serverside V
-2. fix linkedin broken link V -->
+2. fix linkedin broken link V
+ 3. hide results UI v -->
 
-3. hide results UI
 4. save submmition data to the DB
-5. add buy me a coffee
-6. finish security tokens for api
-7. deployment
+5. limit file size to 5mb in input field and in the handleSubmit
+6. add buy me a coffee
+7. finish security tokens for api
+8. deployment
