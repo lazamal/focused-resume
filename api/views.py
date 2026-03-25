@@ -5,11 +5,16 @@ from django.utils.decorators import method_decorator
 from playwright.sync_api import sync_playwright
 import trafilatura
 import fitz  # PyMuPDF
-import os
+import urllib3
+import urllib3.util
+
+if not hasattr(urllib3, 'util'):
+    urllib3.util = urllib3.util
+
 from pathlib import Path
 from api.models import Resume_Submission
 from api.services.analyze_text import Analyze_Text
-from api.services.analyze_gliner import Analyze_Gliner
+
 from api.services.compare_cv_to_job import compare_cv_to_job
 from api.services.skill_blacklist import skill_blacklist
 from api.services.clean_linkedin_url import clean_linkedin_url
@@ -17,7 +22,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 
 
 analyzer = Analyze_Text()
-# gliner_analyzer = Analyze_Gliner()
+
 
 
 
