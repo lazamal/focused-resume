@@ -98,7 +98,6 @@ function App() {
       console.log("Backend Response:", response.data);
       setResults(response.data);
       toast.success("Analysis complete!");
-      setFile(null);
     } catch (error: any) {
       console.error("Submission error:", error);
       const serverError = error.response?.data?.error;
