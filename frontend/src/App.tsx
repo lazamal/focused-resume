@@ -26,26 +26,41 @@ function App() {
   const [inputMode, setInputMode] = useState<"link" | "text">("link");
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    const maxFileSize = 5 * 1024 * 1024;
     e.preventDefault();
-    if (!file || (!url && !textareaInput)) {
-      toast.error("Upload a file and a link to a job description");
+    const maxFileSize = 5 * 1024 * 1024; // 5MB
+
+    // 1. Client-side Validation
+    if (!file) {
+      toast.error("Please upload your resume.");
       return;
     }
+
+    if (!url && !textareaInput) {
+      toast.error("Please provide a job link or paste the description.");
+      return;
+    }
+
     if (file.size > maxFileSize) {
-      toast.error("File is too big. Please upload a file below 5MB");
+      toast.error("File is too big. Please upload a file below 5MB.");
       return;
     }
+
+    // 2. Prepare UI State
     toast.success("Analysis may take several seconds...");
     setResults(undefined);
     setLoading(true);
+
+    // 3. Construct Multipart Form Data
+    // This matches the 'decoder.MultipartDecoder' logic in your Python post() method
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file); // Becomes data['file_content'] on backend
+
     if (url) {
-      formData.append("url", url);
+      formData.append("url", url); // Becomes data['url'] on backend
     }
+
     if (textareaInput) {
-      formData.append("textarea", textareaInput);
+      formData.append("textarea", textareaInput); // Becomes data['textarea'] on backend
     }
 
     try {
@@ -54,21 +69,27 @@ function App() {
         formData,
         {
           headers: {
+            // Note: Axios will automatically set the boundary for multipart/form-data
             "Content-Type": "multipart/form-data",
           },
         },
       );
 
-      console.log(response.data);
+      console.log("Backend Response:", response.data);
       setResults(response.data);
+      toast.success("Analysis complete!");
     } catch (error: any) {
+      console.error("Submission error:", error);
       const serverError = error.response?.data?.error;
+
       if (serverError) {
         toast.error(serverError);
       } else if (error.response?.status === 408) {
-        toast.error("The request timed out. Please try again.");
+        toast.error(
+          "The request timed out. LinkedIn might be blocking the scraper.",
+        );
       } else if (error.response?.status === 429) {
-        toast.error("You're moving too fast! Please wait a minute.");
+        toast.error("Too many requests. Please wait a moment.");
       } else {
         toast.error("Something went wrong with the server.");
       }
