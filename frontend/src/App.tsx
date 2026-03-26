@@ -50,7 +50,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/analyze/",
+        "https://iksahozyz7.execute-api.eu-central-1.amazonaws.com",
         formData,
         {
           headers: {
