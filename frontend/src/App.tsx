@@ -46,14 +46,40 @@ function App() {
     }
 
     // 2. Prepare UI State
-    toast.success("Analysis may take several seconds...");
+
     setResults(undefined);
     setLoading(true);
+
+    // פונקציית עזר לקריאת הקובץ כ-ArrayBuffer (בינארי)
+    const readFileAsArrayBuffer = (fileToRead: File): Promise<ArrayBuffer> => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as ArrayBuffer);
+        reader.onerror = reject;
+        reader.readAsArrayBuffer(fileToRead); // זה השלב שבו הדרוג מוריד את הקובץ
+      });
+    };
+
+    let fileContent: Blob;
+    try {
+      // נציג הודעה ספציפית אם זה לוקח זמן
+      toast.info("Reading resume from cloud storage...");
+      const arrayBuffer = await readFileAsArrayBuffer(file); // ניצור Blob חדש ומלא מהתוכן שקראנו מהזיכרון
+      fileContent = new Blob([arrayBuffer], { type: file.type });
+    } catch (error) {
+      console.error("Error reading file:", error);
+      toast.error(
+        "Could not read the Drive file. Please try downloading it locally first.",
+      );
+      setLoading(false);
+      return; // עוצרים כאן אם אי אפשר לקרוא את הקובץ
+    }
 
     // 3. Construct Multipart Form Data
     // This matches the 'decoder.MultipartDecoder' logic in your Python post() method
     const formData = new FormData();
-    formData.append("file", file); // Becomes data['file_content'] on backend
+    toast.success("Analysis may take several seconds...");
+    formData.append("file", fileContent, file.name); // Becomes data['file_content'] on backend
 
     if (url) {
       formData.append("url", url); // Becomes data['url'] on backend
@@ -67,17 +93,12 @@ function App() {
       const response = await axios.post(
         "https://xwgr5b3vpcrh6whmpw676x5vve0bluls.lambda-url.eu-central-1.on.aws/",
         formData,
-        {
-          headers: {
-            // Note: Axios will automatically set the boundary for multipart/form-data
-            "Content-Type": "multipart/form-data",
-          },
-        },
       );
 
       console.log("Backend Response:", response.data);
       setResults(response.data);
       toast.success("Analysis complete!");
+      setFile(null);
     } catch (error: any) {
       console.error("Submission error:", error);
       const serverError = error.response?.data?.error;
