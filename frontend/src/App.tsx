@@ -50,7 +50,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        "https://iksahozyz7.execute-api.eu-central-1.amazonaws.com",
+        "https://xwgr5b3vpcrh6whmpw676x5vve0bluls.lambda-url.eu-central-1.on.aws/",
         formData,
         {
           headers: {
