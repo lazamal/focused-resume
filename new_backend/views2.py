@@ -95,7 +95,7 @@ class AnalyzeCV():
     def post(self, event):
             analyzer = Analyze_Text()
 
-            # 1. Get headers and raw body
+   
             content_type = event.get('headers', {}).get('content-type') or event.get('headers', {}).get('Content-Type')
             body = event.get('body', '') 
 
@@ -105,13 +105,13 @@ class AnalyzeCV():
                     "body": json.dumps({"error": "No body found in request."})
                 }
 
-            # 2. Handle Base64 encoding from API Gateway
+
             if event.get('isBase64Encoded'):
                 body_bytes = base64.b64decode(body)
             else:
                 body_bytes = body.encode('utf-8') if isinstance(body, str) else body
 
-            # 3. Parse Multipart Data (React FormData)
+     
             data = {}
             try:
                 multipart_data = decoder.MultipartDecoder(body_bytes, content_type)

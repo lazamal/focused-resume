@@ -1,57 +1,76 @@
-# Focused-Resume: AI-Powered CV Matcher 🚀
+# 🚀 Focused-Resume: AI-Powered CV Matcher
 
-**Focused-Resume** is an automated resume screening and tagging application designed to streamline the hiring process. By leveraging Natural Language Processing (NLP), the system analyzes candidate CVs against job descriptions to extract key skills and calculate a compatibility score.
+**Focused-Resume** is a high-performance, serverless application designed to bridge the gap between static resumes and dynamic job descriptions. By leveraging **Named Entity Recognition (NER)** and specialized NLP models, it transforms unstructured PDF data into actionable insights, calculating real-time compatibility scores.
+
+---
+
+## 🔍 Problem Definition
+
+Traditional recruitment processes suffer from "keyword fatigue." Applicants often fail to pass initial screenings because their resumes aren't formatted for legacy ATS (Applicant Tracking Systems), while hiring managers struggle to manually parse through hundreds of PDFs to find specific technical competencies hidden in varied layouts. Furthermore, static job descriptions on JavaScript-heavy sites make it difficult for automated tools to pull accurate requirements.
+
+## 💡 The Solution
+
+Focused-Resume solves this by providing a **Serverless AI-Engine** that:
+
+- **Decodes Layouts:** Uses PDF parsing to "read" resumes, regardless of column structures.
+- **Understands Context:** Employs Machine Learning to extract actual skills and technologies rather than just matching substrings.
+- **Automates Research:** Dynamically scrapes modern job boards to fetch live requirements for instant comparison.
+- **Quantifies Fit:** Provides a data-driven compatibility score to help candidates and recruiters focus on the best matches.
+
+---
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React, Tailwind CSS, Vite
-- **Backend:** Django, Django REST Framework (DRF)
+- **Frontend:** React 18, Tailwind CSS, Vite
+- **Backend:** Serverless (AWS Lambda / Azure Functions)
 - **Environment Management:** Poetry
-- **NLP & Processing:** spaCy, PyMuPDF (fitz)
+- **NLP & Processing:** spaCy, PyMuPDF (fitz), Playwright
+- **Machine Learning Model:** [amjad-awad/skill-extractor](https://huggingface.co/amjad-awad/skill-extractor)
 
-## 🌟 Key Features
+---
 
-- **Automated Skill Extraction:** Uses Named Entity Recognition (NER) to identify technical skills from PDF resumes.
-- **Job Description Matching:** Compares extracted resume data with job requirements provided via URL or text.
-- **Interactive Dashboard:** A React-based UI to view extracted skills as tags and see matching results.
-- **PDF Parsing:** High-performance text extraction from PDF files using PyMuPDF.
+## 🧠 Core Technical Capabilities
 
-## 🚀 Getting Started
+### 1. High-Fidelity PDF Parsing
 
-### Prerequisites
+Instead of basic text scraping, the system utilizes **PyMuPDF (fitz)** to handle complex, multi-column resume layouts.
 
-- Python 3.13 or 3.14
-- Node.js & npm
-- Poetry (Python package manager)
+- **Layer Analysis:** Extracts text while preserving structural integrity and reading order.
+- **Performance:** Highly optimized for low-latency execution within constrained serverless environments.
 
-### Installation
+### 2. Headless Scraping of JS-Generated Sites
 
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd focused-resume
-   Setup Backend:
-   ```
+Modern job boards (LinkedIn, Indeed, etc.) are often built with React or Next.js and do not serve static HTML. Focused-Resume uses **Playwright** to:
 
-Bash
-poetry install
-poetry run python -m spacy download en_core_web_sm
-Setup Frontend:
+- **Dynamic Rendering:** Bypasses static limitations by fully rendering JavaScript before extraction.
+- **Data Normalization:** Scrapes job requirements directly from a URL and cleanses "noisy" web data into structured text for the NLP engine.
 
-Bash
-cd frontend
-npm install
-🏗 Project Structure
-Plaintext
-├── backend/ # Django project & DRF API
-├── frontend/ # React + Vite application
-├── pyproject.toml # Poetry dependencies & configuration
-└── README.md # Project documentation
-📝 Roadmap
-[x] Initial Project Setup (Poetry, React, Django).
+### 3. Advanced NLP & Named Entity Recognition (NER)
 
-[ ] Integration of spaCy for NER Skill Extraction.
+The project moves beyond simple keyword matching. It employs a custom NLP pipeline to:
 
-[ ] Implementation of PDF upload and parsing.
+- **Entity Classification:** Distinguishes between **Tools** (e.g., Docker), **Languages** (e.g., Python), and **Frameworks** (e.g., React).
+- **Contextual Awareness:** Uses **spaCy** to understand the relationship between terms, ensuring "Project Manager" isn't tagged as a "Java" skill just because the word appears nearby.
 
-[ ] Scoring algorithm for Job-CV matching.
+### 4. Machine Learning Integration
+
+The heart of the matching engine is a transformer-based model hosted via Hugging Face.
+
+- **Skill Extraction:** Leverages a fine-tuned model (`skill-extractor`) to identify niche technical competencies that standard dictionary-based scrapers miss.
+- **Scoring Algorithm:** Implements a vector-based similarity check to provide a weighted compatibility score between the extracted CV entities and the scraped job description.
+
+---
+
+## 🏗 Project Structure
+
+The project is built on a **Modular Serverless Architecture**, ensuring zero-cost idling and horizontal scalability:
+
+```plaintext
+├── frontend/             # React + Vite (State managed with Hooks/Context)
+├── functions/            # Serverless Handlers (Python)
+│   ├── parser/           # PyMuPDF logic
+│   ├── scraper/          # Playwright/Headless Chromium
+│   └── analyzer/         # spaCy + Hugging Face Inference
+├── pyproject.toml        # Poetry managed dependencies
+└── README.md             # Project documentation
+```
