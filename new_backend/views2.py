@@ -26,26 +26,26 @@ def scrape_frontend(url):
                     "--disable-setuid-sandbox",
                 ]
             )
-            print('launched chromium')
+     
             context = browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
             page = context.new_page()
-            print('new page in chromium')
+       
             
         
             page.set_default_timeout(20000) 
             
             try:
                 page.goto(url, wait_until="load")
-                print('went to page in chromiun')
+            
                 rendered_content = page.content()
-                print('got page content ')
+         
                 browser.close()
                 return trafilatura.extract(rendered_content)
             except PlaywrightTimeoutError:
                 browser.close()
                 return "TIMEOUT_ERROR" 
     except Exception as e:
-        print(f"Scraping error: {e}")
+  
         return None
     
 
@@ -53,7 +53,7 @@ def scrape_frontend(url):
 def extract_pdf(file_content):
     # Read the uploaded file into memory
     doc = fitz.open(stream=file_content, filetype="pdf")
-    print('opened doc with fitz')
+
     sidebar_text = []
     main_content_text = []
 
@@ -78,7 +78,7 @@ def extract_pdf(file_content):
 
     doc.close()
     
-    print('building pdf text after extractions')
+
     full_cv_text = {
         "sidebar": "\n".join(sidebar_text),
         "main": "\n".join(main_content_text)
@@ -125,7 +125,7 @@ class AnalyzeCV():
                     else:
                         data[name] = part.text  # Text for url/textarea
             except Exception as e:
-                print(f"Multipart Parse Error: {e}")
+        
                 return {"statusCode": 400, "body": json.dumps({"error": "Failed to parse form data"})}
 
             # 4. Extract variables from the parsed data
@@ -139,7 +139,7 @@ class AnalyzeCV():
             # 5. Process Job Description (Scrape or Text)
             job_text_scraped = None
             if job_url:
-                print(f"Processing URL: {job_url}")
+      
                 cleaned_url = clean_linkedin_url(job_url)
                 job_text_scraped = scrape_frontend(cleaned_url)
                 
@@ -152,7 +152,7 @@ class AnalyzeCV():
         
                 job_skills = analyzer.extract_skills_new_model(job_text_scraped)
             elif text_description:
-                print("Processing raw text description")
+        
                 job_skills = analyzer.extract_skills_new_model(text_description)
             else:
                 return {"statusCode": 400, "body": json.dumps({"error": "No job description provided"})}
@@ -163,7 +163,7 @@ class AnalyzeCV():
                 return {"statusCode": 400, "body": json.dumps({"error": "No skills detected in job description."})}
 
             # 7. Analyze CV and Compare
-            print("Extracting PDF text...")
+        
             pdf_text = extract_pdf(cv_file_bytes)
             cv_skills = analyzer.extract_skills_new_model(pdf_text)
             
