@@ -1,29 +1,31 @@
-ARG PYTHON_VERSION=3.13-slim
+# 1. Base Image
+FROM public.ecr.aws/lambda/python:3.12
 
-FROM python:${PYTHON_VERSION}
+# 2. System Dependencies (Never changes - Cached)
+RUN dnf install -y \
+    atk cups-libs gtk3 libXcomposite libXcursor libXdamage libXext \
+    libXi libXrender libXtst pango alsa-lib \
+    mesa-libgbm nss nss-tools && dnf clean all
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# 3. Requirements (Changes rarely - Cached)
+COPY requirements.txt .
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
-# install psycopg2 dependencies.
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# 4. Playwright Browsers (Huge - MUST BE CACHED)
+# We move this ABOVE the code so it's not re-installed on code changes
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN python -m playwright install chromium
+RUN chmod -R 775 /ms-playwright
 
-RUN mkdir -p /code
+# 5. Heavy ML Models (The 6.5-minute step - CACHED)
+# By putting this in its own layer before the app code, 
+# you only wait 6 minutes ONCE.
+COPY models/skill-extractor/ ./models/skill-extractor/
 
-WORKDIR /code
+# 6. Your Project Folders & App Code (Fastest changing - LAST)
+# Now, adding a print() only triggers THIS step.
+COPY new_backend/ ./new_backend/
+COPY app.py .
 
-RUN pip install poetry
-COPY pyproject.toml poetry.lock /code/
-RUN poetry config virtualenvs.create false
-RUN poetry install --only main --no-root --no-interaction
-COPY . /code
-
-ENV SECRET_KEY "Bz1tk8j7Er8OsuEV8ciaCXx8wciOPfze0u9L4NFUVGHKXbREYQ"
-RUN python manage.py collectstatic --noinput
-
-EXPOSE 8000
-
-CMD ["gunicorn","--bind",":8000","--workers","2","backend.wsgi"]
+# 7. Set the CMD
+CMD [ "app.handler" ]

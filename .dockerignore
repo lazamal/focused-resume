@@ -1,20 +1,36 @@
 fly.toml
 .git/
 *.sqlite3
-
-# Ignore development experiments
 *.ipynb
 .ipynb_checkpoints/
 experiments/
 data/
-
-# Ignore Python "junk"
 __pycache__/
 *.pyc
 .venv/
 env/
-
-# Ignore local secrets and git
 .env
 .git
 .gitignore
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+dist/
+build/
+*.egg-info/
+db.sqlite3
+db.sqlite3-journal
+staticfiles/
+media/
+*.log
+.vscode/
+.DS_Store
+Thumbs.db
+.venv/
+.git/
+__pycache__/
