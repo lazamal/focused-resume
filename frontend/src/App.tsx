@@ -121,9 +121,9 @@ function App() {
       <Toaster position="top-center" />
 
       <header className="flex flex-col text-center  mb-12">
-        <div className="flex flex-row align-middle justify-center gap-2">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-            Stop Guessing.{"  "}
+        <div className="flex align-middle justify-center gap-2">
+          <h1 className="flex md:flex-row flex-col text-4xl font-extrabold mb-2 gap-1">
+            <span className=" text-gray-900">Stop Guessing.{"  "}</span>
             <span className="text-orange-400">Start Matching.</span>
           </h1>
         </div>
