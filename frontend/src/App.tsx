@@ -292,7 +292,7 @@ function App() {
             numberOfMatchedSkills={results?.number_of_matched_skills}
             totalSkillsForJob={results?.total_skills_for_job}
           />
-          <div className="flex flex-col md:flex-row items-stretch gap-4">
+          <div className="flex flex-col md:flex-row items-stretch">
             <div className="flex-1 flex flex-col">
               <SkillDisplayCard
                 headline="Matched skills"
