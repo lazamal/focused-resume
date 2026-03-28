@@ -132,7 +132,9 @@ function App() {
             <span className="block md:inline">
               Know which skills you're missing{" "}
             </span>
-            <span className="block md:inline">before you apply.</span>
+            <span className="block md:inline">
+              <i>before</i> you apply.
+            </span>
           </p>
         </div>
       </header>
