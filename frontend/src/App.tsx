@@ -120,14 +120,18 @@ function App() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4 w-full max-w-full overflow-x-hidden">
       <Toaster position="top-center" />
 
-      <header className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-          Stop Guessing.{" "}
-          <span className="text-orange-400">Start Matching.</span>
-        </h1>
-        <p className="text-gray-500 text-lg">
-          Know which skills you're missing before you apply
-        </p>
+      <header className="flex flex-col text-center  mb-12">
+        <div className="flex flex-row align-middle justify-center gap-2">
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+            Stop Guessing.{"  "}
+            <span className="text-orange-400">Start Matching.</span>
+          </h1>
+        </div>
+        <div>
+          <p className="text-gray-500 text-lg">
+            Know which skills you're missing before you apply
+          </p>
+        </div>
       </header>
 
       <main className="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-8">

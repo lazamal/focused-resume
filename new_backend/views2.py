@@ -160,7 +160,21 @@ class AnalyzeCV():
             job_clean_blacklist = skill_blacklist(job_skills, self.job_blacklist)
             
             if not job_clean_blacklist:
-                return {"statusCode": 400, "body": json.dumps({"error": "No skills detected in job description."})}
+                return {
+                    "statusCode": 200,
+                    "headers": {
+                        "Access-Control-Allow-Origin": "*", 
+                        "Content-Type": "application/json"
+                    },
+                    "body": json.dumps({
+                        "overall_score": 0,
+                        "matched_skills": [],
+                        "skills_to_learn": [],
+                        "number_of_matched_skills": 0,
+                        "total_skills_for_job": 0,
+                        "message": "No skills detected in job description."
+                    })
+    }
 
             
         
