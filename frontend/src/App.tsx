@@ -72,21 +72,19 @@ function App() {
         "Could not read the Drive file. Please try downloading it locally first.",
       );
       setLoading(false);
-      return; // עוצרים כאן אם אי אפשר לקרוא את הקובץ
+      return;
     }
 
-    // 3. Construct Multipart Form Data
-    // This matches the 'decoder.MultipartDecoder' logic in your Python post() method
     const formData = new FormData();
     toast.success("Analysis may take several seconds...");
-    formData.append("file", fileContent, file.name); // Becomes data['file_content'] on backend
+    formData.append("file", fileContent, file.name);
 
     if (url) {
-      formData.append("url", url); // Becomes data['url'] on backend
+      formData.append("url", url);
     }
 
     if (textareaInput) {
-      formData.append("textarea", textareaInput); // Becomes data['textarea'] on backend
+      formData.append("textarea", textareaInput);
     }
 
     try {
@@ -119,7 +117,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4 w-full max-w-full overflow-x-hidden">
       <Toaster position="top-center" />
 
       <header className="text-center mb-12">

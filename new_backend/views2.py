@@ -105,7 +105,6 @@ class AnalyzeCV():
                     "body": json.dumps({"error": "No body found in request."})
                 }
 
-
             if event.get('isBase64Encoded'):
                 body_bytes = base64.b64decode(body)
             else:
@@ -157,12 +156,13 @@ class AnalyzeCV():
             else:
                 return {"statusCode": 400, "body": json.dumps({"error": "No job description provided"})}
 
-            # 6. Filter Blacklist & Check for skills
+        
             job_clean_blacklist = skill_blacklist(job_skills, self.job_blacklist)
+            
             if not job_clean_blacklist:
                 return {"statusCode": 400, "body": json.dumps({"error": "No skills detected in job description."})}
 
-            # 7. Analyze CV and Compare
+            
         
             pdf_text = extract_pdf(cv_file_bytes)
             cv_skills = analyzer.extract_skills_new_model(pdf_text)
