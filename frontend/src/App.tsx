@@ -117,7 +117,7 @@ function App() {
   };
 
   return (
-    <div className="max-h-min bg-gray-50 flex flex-col items-center py-12 px-4 w-full max-w-full overflow-x-hidden">
+    <div className="max-h-fit bg-gray-50 flex flex-col items-center py-12 px-4 w-full max-w-full overflow-x-hidden">
       <Toaster position="top-center" />
 
       <header className="text-center mb-12">
