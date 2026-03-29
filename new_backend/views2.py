@@ -89,7 +89,7 @@ def extract_pdf(file_content):
 
 class AnalyzeCV():
     def __init__(self):
-        self.job_blacklist = ['tango']
+        self.job_blacklist = ['tango', 'Highly motivated']
     
 
     def post(self, event):
