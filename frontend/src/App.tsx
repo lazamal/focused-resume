@@ -76,7 +76,7 @@ function App() {
     }
 
     const formData = new FormData();
-    toast.success("Analysis may take several seconds...");
+    toast.success("Analysis started. This may take up to 40 seconds...");
     formData.append("file", fileContent, file.name);
 
     if (url) {
@@ -86,6 +86,11 @@ function App() {
     if (textareaInput) {
       formData.append("textarea", textareaInput);
     }
+    if (!results) {
+      setTimeout(() => {
+        toast.success("Hang tight, we're almost there...");
+      }, 10000);
+    }
 
     try {
       const response = await axios.post(
@@ -93,11 +98,9 @@ function App() {
         formData,
       );
 
-      console.log("Backend Response:", response.data);
       setResults(response.data);
       toast.success("Analysis complete!");
     } catch (error: any) {
-      console.error("Submission error:", error);
       const serverError = error.response?.data?.error;
 
       if (serverError) {
