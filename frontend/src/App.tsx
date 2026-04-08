@@ -287,6 +287,13 @@ function App() {
               </>
             )}
           </button>
+          <span className="text-sm font-semibold text-gray-700  ">
+            <p>We do not save your CV. </p>
+            <p>
+              {"    "}Your data is used solely for this analysis and will never
+              be used for any other.{" "}
+            </p>
+          </span>
         </form>
       </main>
 
